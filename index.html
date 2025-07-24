@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Books</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <main id="dashboard-screen" class="screen active">
+            <header class="app-header">
+                <h1>Zenith Books ✨</h1>
+            </header>
+            <div class="content">
+                <div class="card">
+                    <h3>Net Cash Flow</h3>
+                    <p id="cash-flow-value" class="kpi-value">₹0.00</p>
+                </div>
+                <div class="card">
+                    <h3>This Month's Activity</h3>
+                    <div id="activity-chart" class="chart-container">
+                        </div>
+                </div>
+                <div class="card">
+                    <h3>Recent Invoices</h3>
+                    <ul id="recent-invoices-list" class="activity-list"></ul>
+                    <button id="view-all-invoices" class="link-button">View All →</button>
+                </div>
+            </div>
+            <button id="fab" class="fab">+</button>
+        </main>
+
+        <main id="invoices-list-screen" class="screen">
+            <header class="app-header">
+                <button class="back-button" data-target="dashboard-screen">←</button>
+                <h1>All Invoices</h1>
+            </header>
+            <div id="all-invoices-container" class="content activity-list"></div>
+        </main>
+
+        <main id="invoice-screen" class="screen">
+            <header class="app-header"><button class="back-button" data-target="dashboard-screen">←</button><h1>New Invoice</h1></header>
+            <div class="content"><form id="invoice-form" class="data-form"><div class="form-group"><label for="customer">Bill To</label><input type="text" id="customer" required placeholder="Customer Name"></div><div class="form-group"><label for="invoice-date">Date</label><input type="date" id="invoice-date" required></div><h3 class="line-items-title">Items</h3><div id="line-items"></div><button type="button" id="add-item-btn" class="btn-secondary">+ Add Line Item</button><div class="total-section"><span>Total</span><span id="invoice-total" class="total-amount">₹0.00</span></div><div class="form-actions"><button type="submit" class="btn btn-primary">Save Invoice</button></div></form></div>
+        </main>
+        <main id="expense-screen" class="screen">
+            <header class="app-header"><button class="back-button" data-target="dashboard-screen">←</button><h1>New Expense</h1></header>
+            <div class="content"><form id="expense-form" class="data-form"><div class="form-group"><label for="expense-category">Category</label><input type="text" id="expense-category" required placeholder="e.g., Office Supplies"></div><div class="form-group"><label for="expense-amount">Amount</label><input type="number" id="expense-amount" required placeholder="0.00"></div><div class="form-actions"><button type="submit" class="btn btn-primary">Save Expense</button></div></form></div>
+        </main>
+        <main id="customer-screen" class="screen">
+            <header class="app-header"><button class="back-button" data-target="dashboard-screen">←</button><h1>New Customer</h1></header>
+            <div class="content"><form id="customer-form" class="data-form"><div class="form-group"><label for="customer-name">Customer Name</label><input type="text" id="customer-name" required placeholder="Enter full name"></div><div class="form-group"><label for="customer-email">Email</label><input type="email" id="customer-email" required placeholder="name@example.com"></div><div class="form-actions"><button type="submit" class="btn btn-primary">Save Customer</button></div></form></div>
+        </main>
+
+        <div id="action-sheet" class="action-sheet"><div class="action-sheet-content"><button class="action-item" data-action="new-invoice">New Invoice</button><button class="action-item" data-action="new-expense">New Expense</button><button class="action-item" data-action="new-customer">New Customer</button><button id="cancel-action" class="action-item cancel">Cancel</button></div></div>
+        
+        <div id="toast" class="toast"><p id="toast-message"></p></div>
+
+        <div id="invoice-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-invoice-id">Invoice</h2>
+                    <button id="modal-close-btn" class="close-button">×</button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Customer:</strong> <span id="modal-customer-name"></span></p>
+                    <p><strong>Date:</strong> <span id="modal-invoice-date"></span></p>
+                    <hr>
+                    <h4>Items</h4>
+                    <ul id="modal-item-list" class="modal-items"></ul>
+                    <div class="modal-total">
+                        <strong>Total:</strong>
+                        <strong id="modal-total-amount"></strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="download-pdf-btn" class="btn btn-primary">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
